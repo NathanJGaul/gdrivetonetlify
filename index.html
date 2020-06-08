@@ -32,6 +32,15 @@
       const queryString = window.location.search;
       console.log(queryString);
 
+      // convert to url params
+      const urlParams = new URLSearchParams(queryString);
+
+      // check for state
+      if (urlParams.has('state')) {
+        // log state param
+        console.log(urlParams.get('state'));
+      }
+
       /**
        *  On load, called to load the auth2 library and API client library.
        */
