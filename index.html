@@ -28,19 +28,6 @@
       var authorizeButton = document.getElementById('authorize_button');
       var signoutButton = document.getElementById('signout_button');
 
-      // url paramter(s)
-      const queryString = window.location.search;
-      console.log(queryString);
-
-      // convert to url params
-      const urlParams = new URLSearchParams(queryString);
-
-      // check for state
-      if (urlParams.has('state')) {
-        // log state param
-        console.log(urlParams.get('state'));
-      }
-
       /**
        *  On load, called to load the auth2 library and API client library.
        */
@@ -79,7 +66,8 @@
         if (isSignedIn) {
           authorizeButton.style.display = 'none';
           signoutButton.style.display = 'block';
-          listFiles();
+          // listFiles();
+          main();
         } else {
           authorizeButton.style.display = 'block';
           signoutButton.style.display = 'none';
@@ -130,6 +118,43 @@
           } else {
             appendPre('No files found.');
           }
+        });
+      }
+
+      function main() {
+        // url paramter(s)
+        const queryString = window.location.search;
+        console.log(queryString);
+
+        // convert to url params
+        const urlParams = new URLSearchParams(queryString);
+
+        // check for state
+        if (urlParams.has('state')) {
+          const fileId = urlParams.get('state').ids.pop();
+          console.log(fileId);
+          fetchFile(fileId);
+        }
+      }
+
+      function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+      }
+
+      function fetch_file(fileId) {
+        gapi.client.drive.files.get({
+          'fileId': fileId,
+          'alt': 'media'
+        }).then(function(file){
+          console.log(file);
+        }).catch(function(err) {
+          console.error(err);
         });
       }
 
