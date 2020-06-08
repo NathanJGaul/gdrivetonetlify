@@ -133,8 +133,8 @@
       }
 
       function getFilesInFolder(folderId) {
-        gapi.client.drive.files.list({
-          q: `${folderId} in parents`
+        gapi.client.drive.fils.list({
+          q: `'${folderId}' in' parents`
         }).then(function(result) {
           console.log(result);
         }).catch(function(err) {
