@@ -132,6 +132,16 @@
         });
       }
 
+      function getFilesInFolder(folderId) {
+        gapi.client.drive.files.list({
+          q: `${folderId} in parents`
+        }).then(function(result) {
+          console.log(result);
+        }).catch(function(err) {
+          console.log(err);
+        });
+      }
+
       function main() {
         // url paramter(s)
         const queryString = window.location.search;
@@ -143,10 +153,9 @@
 
         // check for state
         if (urlParams.has('state')) {
-          fileIds = JSON.parse(urlParams.get('state'))['ids'];
-          const fileId = fileIds.pop();
-          console.log(fileId);
-          fetchFile(fileId);
+          ids = JSON.parse(urlParams.get('state'))['ids'];
+          const folderId = ids.pop();
+          getFilesInFolder(folderId);
         }
       }
 
