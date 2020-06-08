@@ -132,8 +132,8 @@
 
         // check for state
         if (urlParams.has('state')) {
-          console.log(JSON.parse(urlParams.get('state'))['ids']);
-          const fileId = urlParams.get('state').ids.pop();
+          fileIds = JSON.parse(urlParams.get('state'))['ids'];
+          const fileId = fileIds.pop();
           console.log(fileId);
           fetchFile(fileId);
         }
