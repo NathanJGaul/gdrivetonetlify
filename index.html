@@ -149,7 +149,7 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
       }
 
-      function fetch_file(fileId) {
+      function fetchFile(fileId) {
         gapi.client.drive.files.get({
           'fileId': fileId,
           'alt': 'media'
